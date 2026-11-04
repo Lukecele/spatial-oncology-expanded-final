@@ -1,0 +1,6 @@
+cell_line,drug,IC50
+A549,Osimertinib,0.45
+H1975,Osimertinib,0.12
+PC9,Osimertinib,0.03
+HCC827,Osimertinib,0.01
+CALU1,Osimertinib,5.2
