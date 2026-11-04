@@ -6,10 +6,10 @@ Implements basic compartmental model fitting using Stan via CmdStanPy.
 
 import numpy as np
 import pandas as pd
-from cmdstanpy import CmdStanModel
+
 
 def simulate_one_compartment(dose, k_elim, V, times):
-    """Simple one‑compartment IV bolus model.
+    """Simple one-compartment IV bolus model.
     C(t) = (dose/V) * exp(-k_elim * t)
     """
     dose = float(dose)
@@ -19,8 +19,9 @@ def simulate_one_compartment(dose, k_elim, V, times):
     conc = (dose / V) * np.exp(-k_elim * times)
     return conc
 
+
 def fit_one_compartment(data_df, dose, V_initial=1.0):
-    """Fit a one‑compartment model to concentration‑time data.
+    """Fit a one-compartment model to concentration-time data.
     Parameters
     ----------
     data_df: pandas.DataFrame with columns ['time','conc']
@@ -30,6 +31,14 @@ def fit_one_compartment(data_df, dose, V_initial=1.0):
     -------
     fit_result: CmdStanModel fit object
     """
+    try:
+        from cmdstanpy import CmdStanModel
+    except ImportError:
+        raise ImportError(
+            "cmdstanpy is required for Bayesian fitting. "
+            "Install it with: pip install cmdstanpy"
+        )
+
     stan_code = """
     data {
         int<lower=1> N;               // number of observations
@@ -52,7 +61,6 @@ def fit_one_compartment(data_df, dose, V_initial=1.0):
         conc ~ normal((dose / V) * exp(-k_elim * time), sigma);
     }
     """
-    # Write temporary Stan file
     import tempfile, os
     with tempfile.TemporaryDirectory() as tmpdir:
         stan_path = os.path.join(tmpdir, "pk_pd_model.stan")
@@ -66,11 +74,12 @@ def fit_one_compartment(data_df, dose, V_initial=1.0):
             "dose": dose,
             "V_guess": V_initial,
         }
-        fit = model.sample(data=data, chains=4, parallel_chains=4, iter_sampling=1000, iter_warmup=500)
+        fit = model.sample(data=data, chains=4, parallel_chains=4,
+                           iter_sampling=1000, iter_warmup=500)
     return fit
 
+
 if __name__ == "__main__":
-    # Simple demo when run as script
     times = np.linspace(0, 24, 13)
     conc = simulate_one_compartment(dose=100, k_elim=0.15, V=10, times=times)
     df = pd.DataFrame({"time": times, "conc": conc})
