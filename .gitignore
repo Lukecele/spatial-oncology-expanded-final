@@ -1,0 +1,14 @@
+*.pyc
+__pycache__/
+.env
+.venv/
+.env/
+.conda/
+.DS_Store
+*.sqlite
+data/
+*.egg-info/
+*.egg
+dist/
+build/
+*.log
