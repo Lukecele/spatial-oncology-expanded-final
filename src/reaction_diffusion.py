@@ -23,12 +23,16 @@ def reaction_diffusion_1d(D, k_decay, c0, L=1.0, nx=101, T=1.0, nt=1000):
     c : np.ndarray – concentration profile at time T
     """
     dx = L / (nx - 1)
-    dt = T / nt
+    diffusion_dt = np.inf if D <= 0 else dx**2 / (2 * D)
+    reaction_dt = np.inf if k_decay <= 0 else 1 / k_decay
+    stable_dt = min(diffusion_dt, reaction_dt)
+    n_steps = max(nt, int(np.ceil(T / stable_dt)))
+    dt = T / n_steps
     x = np.linspace(0, L, nx)
     c = np.zeros(nx)
     c[0] = c0
 
-    for _ in range(nt):
+    for _ in range(n_steps):
         c_new = c.copy()
         for i in range(1, nx - 1):
             c_new[i] = c[i] + dt * (
@@ -59,10 +63,14 @@ def reaction_diffusion_3d(D, k_decay, source_coords, source_strength,
     """
     n = grid_size
     dx = L / (n - 1)
-    dt = T / nt
+    diffusion_dt = np.inf if D <= 0 else dx**2 / (6 * D)
+    reaction_dt = np.inf if k_decay <= 0 else 1 / k_decay
+    stable_dt = min(diffusion_dt, reaction_dt)
+    n_steps = max(nt, int(np.ceil(T / stable_dt)))
+    dt = T / n_steps
     c = np.zeros((n, n, n))
 
-    for _ in range(nt):
+    for _ in range(n_steps):
         laplacian = np.zeros_like(c)
         laplacian[1:-1,1:-1,1:-1] = (
             (c[2:,1:-1,1:-1] + c[:-2,1:-1,1:-1]

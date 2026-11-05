@@ -48,7 +48,7 @@ def compute_cri(dose, k_elim, V, D, k_decay, times, L=1.0, nx=101):
         effect = c_tissue**2 / (IC50**2 + c_tissue**2)
 
         # CRI = spatial integral of effect over tissue
-        cri_values[i] = np.trapz(effect, x)
+        cri_values[i] = np.trapezoid(effect, x)
 
     return cri_values
 

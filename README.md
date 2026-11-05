@@ -23,3 +23,11 @@ expanded_cri_study/
 ├─ .gitignore
 └─ .github/workflows/ci.yml  # CI workflow
 ```
+
+## Submission package
+
+The aligned exploratory preprint package is included under `submission/`.
+It contains the Markdown source, DOCX/PDF renders, figures, cover letter,
+research-only CRI calculator, focused tests, and audit files. The package is
+kept separate from the expanded model source and does not change the clinical
+interpretation of this repository.
