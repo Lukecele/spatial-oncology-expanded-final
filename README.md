@@ -1,33 +1,32 @@
 # Expanded CRI Study Repository
 
-Questo repository contiene il framework di **Cellular Response Index (CRI)** esteso per supportare tumori analoghi a quelli EGFR‑mutati. Include:
+This is the personal expanded-model repository for the Spatial Continuum
+project. It contains the reaction-diffusion and multiscale solver work, tests,
+CI, and the mirrored exploratory submission package. It is not the canonical
+translational submission repository.
 
-- Moduli di modellazione (PK/PD, reaction‑diffusion, multiscale, agent‑based)
-- Pipeline di test automatizzati (unit, integration, benchmark, stress)
-- Documentazione e piano di progetto (vedi `PLAN.md`)
-- CI configurata con GitHub Actions
+Canonical submission repository:
+https://github.com/Lukecele/spatial-continuum-translational
 
-## Struttura del progetto
+This repository remains useful as the personal solver and development archive;
+its `submission/` directory is a convenience mirror, while the authoritative
+translational data registry and submission home are maintained in the canonical
+repository above.
+
+## Project structure
 ```
-expanded_cri_study/
-├─ src/                 # Codice sorgente dei moduli
-│   ├─ __init__.py
-│   ├─ pk_pd.py
-│   ├─ reaction_diffusion.py
-│   └─ multiscale.py
-├─ tests/               # Test suite
-│   ├─ __init__.py
-│   └─ test_pk_pd.py
-├─ data/                # Dati di esempio (git‑ignored)
-├─ PLAN.md              # Piano dettagliato di lavoro
-├─ .gitignore
-└─ .github/workflows/ci.yml  # CI workflow
+src/                 # Solver source modules
+tests/               # Automated test suite
+data/                # Example or ignored data
+PLAN.md              # Development plan
+.github/workflows/   # CI workflow
+submission/          # Mirrored exploratory preprint package
 ```
 
-## Submission package
+## Submission mirror
 
 The aligned exploratory preprint package is included under `submission/`.
 It contains the Markdown source, DOCX/PDF renders, figures, cover letter,
-research-only CRI calculator, focused tests, and audit files. The package is
-kept separate from the expanded model source and does not change the clinical
-interpretation of this repository.
+supplementary materials, research-only CRI calculator, focused tests, and audit
+files. The package is kept separate from the expanded model source and does not
+change the clinical interpretation of this repository.
